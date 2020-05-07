@@ -14,7 +14,7 @@ import { useHttpClient } from "../../shared/hooks/http-hook";
 import { AuthContext } from "../../shared/context/auth-context";
 import "./PlaceForm.css";
 
-const NewPlace = (props) => {
+const NewPlace = () => {
   const auth = useContext(AuthContext);
   const { isLoading, error, sendRequest, clearError } = useHttpClient();
   const [formState, inputHandler] = useForm(
@@ -51,11 +51,10 @@ const NewPlace = (props) => {
         }),
         { "Content-Type": "application/json" }
       );
-
-      // Redirect the user to a diffrent page
       history.push("/");
     } catch (err) {}
   };
+
   return (
     <React.Fragment>
       <ErrorModal error={error} onClear={clearError} />
@@ -67,29 +66,27 @@ const NewPlace = (props) => {
           type="text"
           label="Title"
           validators={[VALIDATOR_REQUIRE()]}
-          errorText="Please Enter a Vaild Title"
+          errorText="Please enter a valid title."
           onInput={inputHandler}
         />
         <Input
           id="description"
           element="textarea"
-          type="text"
           label="Description"
           validators={[VALIDATOR_MINLENGTH(5)]}
-          errorText="Please enter a vaild description (at least 5 characters)."
+          errorText="Please enter a valid description (at least 5 characters)."
           onInput={inputHandler}
         />
         <Input
           id="address"
           element="input"
-          type="text"
           label="Address"
           validators={[VALIDATOR_REQUIRE()]}
-          errorText="Please Enter a Vaild address."
+          errorText="Please enter a valid address."
           onInput={inputHandler}
         />
         <Button type="submit" disabled={!formState.isValid}>
-          ADD EVENT
+          ADD PLACE
         </Button>
       </form>
     </React.Fragment>
