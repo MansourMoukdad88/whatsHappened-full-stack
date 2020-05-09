@@ -34,7 +34,9 @@ const PlaceItem = (props) => {
     try {
       await sendRequest(
         `http://localhost:5000/api/places/${props.id}`,
-        "DELETE"
+        "DELETE",
+        null,
+        { Authorization: "bearer " + auth.token }
       );
       props.onDelete(props.id);
     } catch (err) {}
@@ -49,7 +51,7 @@ const PlaceItem = (props) => {
         header={props.address}
         contentClass="place-item__modal-content"
         footerClass="place-item__footer"
-        footer={<Button onClick={closeMapHandler}>CLOSE</Button>}
+        footer={<Button onClick={closeMapHandler}>Close</Button>}
       >
         <div className="map-container">
           <Map center={props.coordinates} zoom={16} />
@@ -63,16 +65,16 @@ const PlaceItem = (props) => {
         footer={
           <React.Fragment>
             <Button inverse onClick={cancelDeleteHandler}>
-              CANCEL
+              Cancel
             </Button>
             <Button danger onClick={confirmDeleteHandler}>
-              DELETE
+              Delete
             </Button>
           </React.Fragment>
         }
       >
         <p>
-          Do you want to proceed and delete this place? Please note that can't
+          Do you want to proceed and delete this event? Please note that can't
           be undone thereafter.
         </p>
       </Modal>
@@ -92,14 +94,14 @@ const PlaceItem = (props) => {
           </div>
           <div className="place-item__actions">
             <Button inverse onClick={openMapHandler}>
-              VIEW ON MAP
+              View On Map
             </Button>
             {auth.userId === props.creatorId && (
-              <Button to={`/places/${props.id}`}>EDIT</Button>
+              <Button to={`/places/${props.id}`}>Edit</Button>
             )}
             {auth.userId === props.creatorId && (
               <Button danger onClick={showDeleteWarningHandler}>
-                DELETE
+                Delete
               </Button>
             )}
           </div>
