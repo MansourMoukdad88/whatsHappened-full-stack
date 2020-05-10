@@ -18,7 +18,7 @@ const getPlaceById = async (req, res, next) => {
     place = await Place.findById(placeId);
   } catch (err) {
     const error = new HttpError(
-      "Something went wrong, could not find a place",
+      "Something went wrong, could not find a story",
       500
     );
     return next(error);
@@ -26,7 +26,7 @@ const getPlaceById = async (req, res, next) => {
 
   if (!place) {
     const error = new HttpError(
-      "Cound not find a place for the porvided id.",
+      "Cound not find a story for the porvided id.",
       404
     );
     return next(error);
@@ -46,7 +46,7 @@ const getPlacesByUserId = async (req, res, next) => {
     userWithPlaces = await User.findById(userId).populate("places");
   } catch (err) {
     const error = new HttpError(
-      "Fetching places failed, please try again later",
+      "Fetching stories failed, please try again later",
       500
     );
     return next(error);
@@ -55,7 +55,7 @@ const getPlacesByUserId = async (req, res, next) => {
   // if(!places || places.length === 0) {
   if (!userWithPlaces || userWithPlaces.places.length === 0) {
     return next(
-      new HttpError("Cound not find places for the porvided user id.", 404)
+      new HttpError("Cound not find stories for the porvided user id.", 404)
     );
   }
 
@@ -99,7 +99,7 @@ const createPlace = async (req, res, next) => {
     user = await User.findById(req.userData.userId);
   } catch (err) {
     const error = new HttpError(
-      "Creating place failed, please try again.",
+      "Creating story failed, please try again.",
       500
     );
     return next(error);
@@ -121,7 +121,7 @@ const createPlace = async (req, res, next) => {
     await sess.commitTransaction();
   } catch (err) {
     const error = new HttpError(
-      "Creating place failed, please try again.",
+      "Creating story failed, please try again.",
       500
     );
     return next(error);
@@ -149,14 +149,14 @@ const updatePlace = async (req, res, next) => {
     place = await Place.findById(placeId);
   } catch (err) {
     const error = new HttpError(
-      "Something went wrong, could not update place. 1",
+      "Something went wrong, could not update story. 1",
       500
     );
     return next(error);
   }
 
   if (place.creator.toString() !== req.userData.userId) {
-    const error = new HttpError("You are not allowed to edit this place.", 401);
+    const error = new HttpError("You are not allowed to edit this story.", 401);
     return next(error);
   }
 
@@ -167,7 +167,7 @@ const updatePlace = async (req, res, next) => {
     await place.save();
   } catch (err) {
     const error = new HttpError(
-      "Something went wrong, could not update place. 2",
+      "Something went wrong, could not update story. 2",
       500
     );
     return next(error);
@@ -186,19 +186,19 @@ const deletePlace = async (req, res, next) => {
     place = await Place.findById(placeId).populate("creator");
   } catch (err) {
     const error = new HttpError(
-      "Something went wrong, could not delete place.",
+      "Something went wrong, could not delete story.",
       500
     );
     return next(error);
   }
 
   if (!place) {
-    const error = new HttpError("Could not find place for this id.", 404);
+    const error = new HttpError("Could not find story for this id.", 404);
     return next(error);
   }
   if (place.creator.id !== req.userData.userId) {
     const error = new HttpError(
-      "You are not allowed to delete this place.",
+      "You are not allowed to delete this story.",
       401
     );
     return next(error);
@@ -215,7 +215,7 @@ const deletePlace = async (req, res, next) => {
     await sess.commitTransaction();
   } catch (err) {
     const error = new HttpError(
-      "Something went wrong, could not delete place.",
+      "Something went wrong, could not delete story.",
       500
     );
     return next(error);
@@ -223,7 +223,7 @@ const deletePlace = async (req, res, next) => {
   fs.unlink(imagePath, (err) => {
     console.log(err);
   });
-  res.status(200).json({ message: "Deleted Place." });
+  res.status(200).json({ message: "Deleted Story." });
 };
 
 exports.getPlaceById = getPlaceById;

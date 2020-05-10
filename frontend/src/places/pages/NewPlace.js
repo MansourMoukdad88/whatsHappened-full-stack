@@ -69,7 +69,7 @@ const NewPlace = () => {
           id="title"
           element="input"
           type="text"
-          label="Title"
+          label="Story"
           validators={[VALIDATOR_REQUIRE()]}
           errorText="Please enter a valid title."
           onInput={inputHandler}
@@ -96,7 +96,7 @@ const NewPlace = () => {
           errorText="Please provide an image."
         />
         <Button type="submit" disabled={!formState.isValid}>
-          ADD PLACE
+          Add Story
         </Button>
       </form>
     </React.Fragment>

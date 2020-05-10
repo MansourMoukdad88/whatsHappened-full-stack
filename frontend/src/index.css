@@ -10,7 +10,8 @@ html {
 
 body {
   margin: 0;
-  background: #fff;
+  /* background: #fff; */
+  background-image: url(./shared/util/img/email-pattern.png);
 }
 
 .slide-in-left-enter {
